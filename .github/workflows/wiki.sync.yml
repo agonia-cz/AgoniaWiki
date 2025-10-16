@@ -113,6 +113,11 @@ jobs:
         run: |
           set -e
           cd private
+          
+          # Zjisti výchozí větev
+          DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+          echo "🔍 Zjištěná výchozí větev: $DEFAULT_BRANCH"
+          
           git add frontend/content/wiki frontend/public/wiki
           
           if git diff --cached --quiet; then
@@ -121,5 +126,5 @@ jobs:
           fi
           
           git commit -m "Synchronizace wiki: content/wiki + public/wiki (schváleno) [skip ci]"
-          git push origin main
-          echo "🚀 Změny úspěšně odeslány."
+          git push origin "$DEFAULT_BRANCH"
+          echo "🚀 Změny úspěšně odeslány do větve $DEFAULT_BRANCH."
