@@ -1,0 +1,233 @@
+---
+title: Rozcestník Agonia Wiki
+description: Všechno, co potřebujete vědět o Minecraft serveru Agonia.
+---
+
+<div className="relative overflow-hidden rounded-md border bg-gradient-to-br from-[#2d1b69] via-[#301d74] to-[#52256b] px-6 py-12 text-white shadow-lg">
+  <div className="absolute inset-0 opacity-40 mix-blend-soft-light">
+    <img
+      src="https://placehold.co/1200x600/0f172a/ffffff?text=Agonia"
+      alt="Stylizovaná mapa světa Agonia"
+      className="h-full w-full object-cover"
+      loading="lazy"
+    />
+  </div>
+  <div className="relative space-y-3 max-w-2xl">
+    <span className="inline-flex items-center gap-2 rounded-md bg-white/15 px-4 py-1 text-xs font-semibold uppercase tracking-wide">
+      ⚡ Sezóna „Šepot listí“
+    </span>
+    <h1 className="text-3xl font-bold leading-tight sm:text-4xl">
+      Vítejte na oficiální wiki serveru Agonia
+    </h1>
+    <div className="text-base leading-relaxed text-white/85">
+      <span className="block">
+        {"Najdete zde návody, tipy pro nové hráče, přehled sezónních eventů i kompletní pravidla. Vyberte si kategorii, která vás zajímá, a vrhněte se do hry."}
+      </span>
+    </div>
+    <div className="flex flex-wrap gap-3 pt-3 text-sm font-medium">
+      <a
+        href="/wiki/getting-started"
+        className="inline-flex items-center gap-2 rounded-md bg-white px-4 py-2 text-slate-900 transition hover:bg-slate-100"
+      >
+        🚀 První kroky
+      </a>
+      <a
+        href="/wiki/server/pravidla"
+        className="inline-flex items-center gap-2 rounded-md bg-white/15 px-4 py-2 text-white transition hover:bg-white/20"
+      >
+        📜 Pravidla serveru
+      </a>
+      <a
+        href="/wiki/community/eventy"
+        className="inline-flex items-center gap-2 rounded-md bg-white/15 px-4 py-2 text-white transition hover:bg-white/20"
+      >
+        🎉 Eventy & akce
+      </a>
+    </div>
+  </div>
+</div>
+
+## Rychlý přehled
+
+<div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+  <div className="rounded-md border border-[#8855ff]/30 bg-[#8855ff]/10 p-5 shadow-sm backdrop-blur">
+    <span className="text-xs font-semibold uppercase tracking-wide text-[#bba5ff]">
+      Server
+    </span>
+    <h3 className="mt-2 text-lg font-semibold text-white">IP adresa</h3>
+    <span className="mt-1 block text-sm text-white/80">play.agonia.cz</span>
+  </div>
+  <div className="rounded-md border border-[#ff7e66]/30 bg-[#ff7e66]/10 p-5 shadow-sm backdrop-blur">
+    <span className="text-xs font-semibold uppercase tracking-wide text-[#ffc1b3]">
+      Verze
+    </span>
+    <h3 className="mt-2 text-lg font-semibold text-white">Minecraft 1.20.4 (Fabric)</h3>
+    <span className="mt-1 block text-sm text-white/80">Modpack Agonia Essentials 3.2</span>
+  </div>
+  <div className="rounded-md border border-[#45d6ff]/30 bg-[#45d6ff]/10 p-5 shadow-sm backdrop-blur">
+    <span className="text-xs font-semibold uppercase tracking-wide text-[#a4ecff]">
+      Podpora
+    </span>
+    <h3 className="mt-2 text-lg font-semibold text-white">Discord</h3>
+    <span className="mt-1 block text-sm text-white/80">
+      <a href="https://discord.gg/agonia" className="underline decoration-dotted">
+        {"discord.gg/agonia"}
+      </a>
+    </span>
+  </div>
+  <div className="rounded-md border border-[#ffcd4d]/30 bg-[#ffcd4d]/10 p-5 shadow-sm backdrop-blur">
+    <span className="text-xs font-semibold uppercase tracking-wide text-[#ffe8a6]">
+      Sezónní event
+    </span>
+    <h3 className="mt-2 text-lg font-semibold text-white">Šepot listí</h3>
+    <span className="mt-1 block text-sm text-white/80">
+      Odměny za komunitní questy, nové kosmetiky a tajné lokace.
+    </span>
+  </div>
+</div>
+
+<Callout type="info" emoji="🌱">
+  Noví hráči získají při prvním přihlášení **startovní kit**, který obsahuje nástroje, speciální mapu a kompas ke spawn městu Luminis.
+</Callout>
+
+## Jak začít krok za krokem
+
+<Steps>
+  <Step title="Připojte se na Discord">
+    Požádejte o whitelist a stáhněte si aktuální modpack. V kanálu <code>#getting-started</code> najdete vždy nejnovější verzi.
+  </Step>
+  <Step title="Nainstalujte klienta">
+    Použijte Fabric Loader, vložte modpack do složky <code>mods/</code> a ujistěte se, že máte aktivní resource pack Agonia.
+  </Step>
+  <Step title="Dokončete tutorial">
+    NPC Nova vás provede spawnem, ukáže základní mechaniky a odkáže na další články wiki podle vašeho stylu hry.
+  </Step>
+</Steps>
+
+## Doporučené články
+
+<Cards>
+  <Card
+    title="Průvodce profesemi"
+    href="/wiki/economy/profese"
+    description="Jak zvolit specializaci, levelovat profese a vydělávat smaragdy."
+    icon="🎓"
+  />
+  <Card
+    title="Mapa světa Agonia"
+    href="/wiki/svet/mapa"
+    description="Interaktivní mapa, regiony gild a tajné lokace od hráčů."
+    icon="🗺️"
+  />
+  <Card
+    title="Guildovní strategie"
+    href="/wiki/community/gildy"
+    description="Tipy, jak vystavět prosperující město a získat výhody pro členy."
+    icon="🏰"
+  />
+  <Card
+    title="Event kalendář"
+    href="/wiki/community/eventy"
+    description="Nezmeškejte soutěže, turnaje ani tematické výzvy."
+    icon="🎯"
+  />
+</Cards>
+
+## Co je právě hot topic?
+
+<div className="grid gap-6 lg:grid-cols-2">
+  <div className="rounded-md border border-[#4ade80]/30 bg-[#22c55e]/10 p-6">
+    <h3 className="text-lg font-semibold text-[#0f172a]">Nový guildovní systém</h3>
+    <div className="mt-2 text-sm text-[#0f172a]/80">
+      <span className="block">
+        {"Gildy mají vlastní úrovně, sdílené sklady a distanční tržiště. Zjistěte, jak získat prestižní bonusy a kosmetiky."}
+      </span>
+    </div>
+    <a
+      className="mt-4 inline-flex items-center gap-2 rounded-md bg-[#16a34a] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#15803d]"
+      href="/wiki/community/gildy#guildovni-levely"
+    >
+      📘 Přečíst si o gildách
+    </a>
+  </div>
+  <div className="rounded-md border border-[#60a5fa]/40 bg-[#1d4ed8]/15 p-6 text-white">
+    <h3 className="text-lg font-semibold">Rework ekonomiky</h3>
+    <div className="mt-2 text-sm text-white/80">
+      <span className="block">
+        {"Dynamická nabídka a poptávka mění ceny na aukčním domě. Využijte analýzu trhu, zjistěte, kde se vyplatí farmařit a jak fungují daňové bonusy gild."}
+      </span>
+    </div>
+    <a
+      className="mt-4 inline-flex items-center gap-2 rounded-md border border-white/40 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/15"
+      href="/wiki/economy"
+    >
+      📈 Zjistit víc
+    </a>
+  </div>
+</div>
+
+<Callout type="success" emoji="💡">
+  Máte nápad na nový článek nebo jste objevili chybu? Sdílejte své poznámky v kanálu <strong>#wiki-feedback</strong> a pomozte komunitě.
+</Callout>
+
+## Další kategorie
+
+<div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+  <a
+    href="/wiki/server/pravidla"
+    className="group relative overflow-hidden rounded-md border bg-slate-900 p-6 text-white shadow-lg transition hover:-translate-y-1 hover:shadow-xl"
+  >
+    <div className="absolute inset-0 bg-gradient-to-br from-slate-700/60 via-transparent to-indigo-600/60 opacity-80 transition group-hover:opacity-100" />
+    <div className="relative space-y-2">
+      <span className="inline-flex items-center gap-2 rounded-md bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide">
+        📜 Pravidla
+      </span>
+      <h3 className="text-xl font-semibold">Etiketa & bezpečí</h3>
+      <div className="text-sm text-white/80">
+        <span className="block">
+          {"Dodržujte bezpečnostní zásady, chraňte inventář a hlaste porušení."}
+        </span>
+      </div>
+    </div>
+  </a>
+
+  <a
+    href="/wiki/economy"
+    className="group relative overflow-hidden rounded-md border bg-emerald-900 p-6 text-white shadow-lg transition hover:-translate-y-1 hover:shadow-xl"
+  >
+    <div className="absolute inset-0 bg-gradient-to-br from-emerald-700/60 via-transparent to-emerald-500/70 opacity-80 transition group-hover:opacity-100" />
+    <div className="relative space-y-2">
+      <span className="inline-flex items-center gap-2 rounded-md bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide">
+        💰 Ekonomika
+      </span>
+      <h3 className="text-xl font-semibold">Způsoby výdělku</h3>
+      <div className="text-sm text-white/80">
+        <span className="block">
+          {"Profese, obchod, aukční dům i sezónní kontrakty."}
+        </span>
+      </div>
+    </div>
+  </a>
+
+  <a
+    href="/wiki/community/eventy"
+    className="group relative overflow-hidden rounded-md border bg-fuchsia-900 p-6 text-white shadow-lg transition hover:-translate-y-1 hover:shadow-xl"
+  >
+    <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-700/60 via-transparent to-pink-600/70 opacity-80 transition group-hover:opacity-100" />
+    <div className="relative space-y-2">
+      <span className="inline-flex items-center gap-2 rounded-md bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide">
+        🎉 Komunita
+      </span>
+      <h3 className="text-xl font-semibold">Aktuální eventy</h3>
+      <div className="text-sm text-white/80">
+        <span className="block">
+          {"Soutěže, build volné, PvP turnaje a roleplay kampaně."}
+        </span>
+      </div>
+    </div>
+  </a>
+</div>
+
+---
+
+> 📌 **Tip:** V každém článku najdete navigaci na související témata. Pokud si nejste jistí, kde něco najít, napište <code>/wiki &lt;dotaz&gt;</code> přímo na serveru nebo využijte vyhledávání nahoře v navigaci.
