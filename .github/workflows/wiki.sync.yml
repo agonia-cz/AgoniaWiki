@@ -1,130 +1,32 @@
-# .github/workflows/wiki-sync.yml
-name: Synchronizace Wiki (content/wiki + public/wiki → AgoniaWeb, se schválením)
-
-on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'content/wiki/**'
-      - 'public/wiki/**'
-  schedule:
-    - cron: '*/30 * * * *'  # volitelné: každých 30 minut
-  workflow_dispatch: {}      # ruční spuštění z Actions
-
-permissions:
-  contents: read
-
-concurrency:
-  group: wiki-sync-${{ github.ref }}
-  cancel-in-progress: true
-
-jobs:
-  # 1) Detekce změn
-  detect:
-    name: Detekce změn ve wiki
-    runs-on: ubuntu-latest
-    outputs:
-      changed: ${{ steps.check.outputs.changed }}
-    steps:
-      - name: Checkout (veřejné AgoniaWiki)
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-
-      - name: Kontrola změn ve wiki
+- name: Kontrola změn ve wiki
         id: check
         run: |
           set -e
-          # Pro workflow_dispatch a schedule vždy pokračuj
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "${{ github.event_name }}" = "schedule" ]; then
+          # Pro workflow_dispatch vždy pokračuj
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "🔔 Manuální/naplánované spuštění - pokračuji se synchronizací."
+            echo "🔔 Manuální spuštění - pokračuji se synchronizací."
             exit 0
           fi
           
-          # Pro push event kontroluj změny
-          if [ -z "${{ github.event.before }}" ] || [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
-            CHANGED=$(git diff --name-only HEAD~1 HEAD -- content/wiki public/wiki 2>/dev/null | wc -l || echo "1")
-          else
-            CHANGED=$(git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- content/wiki public/wiki | wc -l)
-          fi
-          
-          if [ "$CHANGED" -gt 0 ]; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "🔔 Detekováno $CHANGED změněných souborů ve wiki."
-          else
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "✅ Žádné změny ve wiki."
-          fi
-
-  # 2) Manuální schválení přes Environment gate
-  approval:
-    name: Čeká na manuální schválení
-    runs-on: ubuntu-latest
-    needs: detect
-    if: needs.detect.outputs.changed == 'true'
-    environment:
-      name: wiki-sync     # ← vytvoř v Settings → Environments a nastav Required reviewers
-      url: https://github.com/agonia-cz/AgoniaWiki/actions
-    steps:
-      - run: echo "⏸️ Čeká se na manuální schválení (environment protection)."
-
-  # 3) Synchronizace po schválení
-  sync:
-    name: Synchronizace do WolverStones/AgoniaWeb
-    runs-on: ubuntu-latest
-    needs: approval
-    steps:
-      - name: Checkout (veřejné AgoniaWiki)
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Klonování privátního repozitáře (cílové)
-        run: |
-          set -e
-          git clone "https://x-access-token:${{ secrets.PRIVATE_REPO_TOKEN }}@github.com/WolverStones/AgoniaWeb.git" private
-          cd private
-          git config user.name "Agonia Wiki Sync Bot"
-          git config user.email "actions@github.com"
-
-      - name: Zajištění existence cílových složek
-        run: |
-          mkdir -p private/frontend/content/wiki
-          mkdir -p private/frontend/public/wiki
-
-      - name: Synchronizace content/wiki (MDX) → frontend/content/wiki
-        run: |
-          if [ -d content/wiki ]; then
-            rsync -av --delete --exclude='.git' content/wiki/ private/frontend/content/wiki/
-          else
-            echo "⚠️ Ve zdroji neexistuje složka content/wiki."
-          fi
-
-      - name: Synchronizace public/wiki (assety) → frontend/public/wiki
-        run: |
-          if [ -d public/wiki ]; then
-            rsync -av --delete --exclude='.git' public/wiki/ private/frontend/public/wiki/
-          else
-            echo "⚠️ Ve zdroji neexistuje složka public/wiki."
-          fi
-
-      - name: Commit a push změn (pouze pokud existují)
-        run: |
-          set -e
-          cd private
-          
-          # Zjisti výchozí větev
-          DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
-          echo "🔍 Zjištěná výchozí větev: $DEFAULT_BRANCH"
-          
-          git add frontend/content/wiki frontend/public/wiki
-          
-          if git diff --cached --quiet; then
-            echo "✅ Žádné změny k odeslání."
+          # Pro schedule event kontroluj, jestli byly změny od poslední úspěšné synchronizace
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            # Zkus najít poslední úspěšný sync commit
+            LAST_SYNC=$(git log --grep="Synchronizace wiki:" --format="%H" -1 2>/dev/null || echo "")
+            
+            if [ -n "$LAST_SYNC" ]; then
+              CHANGED=$(git diff --name-only "$LAST_SYNC" HEAD -- content/wiki public/wiki | wc -l)
+              if [ "$CHANGED" -gt 0 ]; then
+                echo "changed=true" >> "$GITHUB_OUTPUT"
+                echo "🔔 Schedule: Detekováno $CHANGED změn od posledního syncu."
+              else
+                echo "changed=false" >> "$GITHUB_OUTPUT"
+                echo "✅ Schedule: Žádné nové změny od posledního syncu."
+                exit 0
+              fi
+            else
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+              echo "🔔 Schedule: První sync, pokračuji."
+            fi
             exit 0
           fi
-          
-          git commit -m "Synchronizace wiki: content/wiki + public/wiki (schváleno) [skip ci]"
-          git push origin "$DEFAULT_BRANCH"
-          echo "🚀 Změny úspěšně odeslány do větve $DEFAULT_BRANCH."
