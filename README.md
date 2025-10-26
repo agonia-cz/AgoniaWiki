@@ -142,7 +142,3 @@ git push
 ✅ Hotovo!  
 Teď můžeš jednoduše upravovat obsah Agonia Wiki bez potřeby vývojového prostředí.  
 Jakmile změny pushneš na GitHub, systém je automaticky přenese do privátního repozitáře, kde proběhne build a nasazení.
-
-
-
-Oprav tohle 
